@@ -1,4 +1,4 @@
-medical Introduction
+Introduction
 ------------
 
 The purpose of this project was to get a better understanding of the CQRS [Command Query Responsibility Segregation] and Event Sourcing patterns 
@@ -6,24 +6,24 @@ using Java8 and a REST API. In this journey I am hoping it will allow me to cons
 have fun learning.
 
 My first iteration was trying to write commands, events and queries to model the CQRS pattern as outlined by
-(https://www.martinfowler.com/bliki/CQRS.html)[martin Fowler]. All I wanted was to create a event log , play back my events 
+[martin fowler](https://www.martinfowler.com/bliki/CQRS.html). All I wanted was to create a event log , play back my events 
 and build my Aggregates! I got into a muddle the pattern is clear but implementing it was no an easy feat.
 The key part of CQRS is the focus on Domain-Driven Design and building Aggregates which can be created form a playback of events.
 
 The classic model to think about is when your visit your local GP Doctors. They have a medical file with a entry of every visit ,
 drugs issued and test etc. At any point in time they can build up a picture of your medical history which in a nutshell is 
 what CQRS and Event sourcing is about. [Greg Young] name comes up a lot and he has a number of interesting youtube talks on 
-this subject (https://youtu.be/8JKjvY4etTY)[cqrs] which are worth a watch. 
+this subject [cqrs](https://youtu.be/8JKjvY4etTY) which are worth a watch. 
 
 After looking at a number of sites on my CQRS trail I concluded that building from scratch was not going to be easy in my time frame to do this work. The same conclusion comes out from (https://docs.microsoft.com/en-us/azure/architecture/patterns/cqrs)[microsoft] in this area.
 Also many people state the following which should be kept in mind.
 
 **For some situations, this separation can be valuable, but beware that for most systems CQRS adds risky complexity.**
 
-Finally I went to my favorite java framework (https://spring.io/)[Spring] which always has something for java Engineers to 
+Finally I went to my favorite java framework (https://spring.io/) which always has something for java Engineers to 
 build software with.
 
-I used (https://projects.spring.io/spring-boot/)[spring-boot] and (http://www.axonframework.org/)[Axon framework].
+I used [spring-boot](https://projects.spring.io/spring-boot/) and [Axon framework](http://www.axonframework.org/).
 So with some late nights ,looking at example reading and digging around in code I built this CQRS and
 Event sourcing example project in spring boot as the first step.
 
@@ -68,7 +68,7 @@ java -jar vehicle-1.0.0-SNAPSHOT.jar
 if no errors occur when sprint boot starts up the service is running 
 [at](http://localhost:8080/api/vehicles).
 The default mode will use in memory database for the query side and axon in memory Event store. 
-To make use of the swagger ui interface use (http://localhost:8080/swagger-ui.html)[endpoint].
+To make use of the swagger ui interface use this [endpoint](http://localhost:8080/swagger-ui.html).
 
 End points
 
