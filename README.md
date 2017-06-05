@@ -1,4 +1,4 @@
-Introduction
+medical Introduction
 ------------
 
 The purpose of this project was to get a better understanding of the CQRS [Command Query Responsibility Segregation] and Event Sourcing patterns 
@@ -10,19 +10,18 @@ My first iteration was trying to write commands, events and queries to model the
 and build my Aggregates! I got into a muddle the pattern is clear but implementing it was no an easy feat.
 The key part of CQRS is the focus on Domain-Driven Design and building Aggregates which can be created form a playback of events.
 
-The classic model to think about is when your visit your local GP Doctors. They have a file with a entry of every visit ,
+The classic model to think about is when your visit your local GP Doctors. They have a medical file with a entry of every visit ,
 drugs issued and test etc. At any point in time they can build up a picture of your medical history which in a nutshell is 
 what CQRS and Event sourcing is about. [Greg Young] name comes up a lot and he has a number of interesting youtube talks on 
 this subject (https://youtu.be/8JKjvY4etTY)[cqrs] which are worth a watch. 
 
-After looking at a number of sites on my CQRS trail I concluded that building from scratch was not going to be easy which
-is the same conclusion that comes out of (https://docs.microsoft.com/en-us/azure/architecture/patterns/cqrs)[microsoft] work in this area.
+After looking at a number of sites on my CQRS trail I concluded that building from scratch was not going to be easy in my time frame to do this work. The same conclusion comes out from (https://docs.microsoft.com/en-us/azure/architecture/patterns/cqrs)[microsoft] in this area.
 Also many people state the following which should be kept in mind.
 
 **For some situations, this separation can be valuable, but beware that for most systems CQRS adds risky complexity.**
 
-Finally I went to my favorite (https://spring.io/)[Java framework Spring] which always has something for Engineers to 
-build software. 
+Finally I went to my favorite java framework (https://spring.io/)[Spring] which always has something for java Engineers to 
+build software with.
 
 I used (https://projects.spring.io/spring-boot/)[spring-boot] and (http://www.axonframework.org/)[Axon framework].
 So with some late nights ,looking at example reading and digging around in code I built this CQRS and
@@ -81,12 +80,12 @@ End points
 ### Swagger
 This application makes use of springfox for integration of swagger and spring boot app. 
 The SwaggerConfig.class is taken from the web tutorial
-[springfox]http://springfox.github.io/springfox/docs/current/#configuring-the-objectmapper
-core swagger annotations found [here]https://github.com/swagger-api/swagger-core/wiki/Annotations-1.5.X.
+[springfox](http://springfox.github.io/springfox/docs/current/#configuring-the-objectmapper)
+core swagger annotations found [here](https://github.com/swagger-api/swagger-core/wiki/Annotations-1.5.X).
 
 The swagger annotations can be found in VehicleResource and SwaggerConfig class files.
 Once nice way to check the swagger api is correct is run the swager-ui in docker and load the generated swagger
-spec output from http://localhost:8080/v2/api-docs.
+spec output from (http://localhost:8080/v2/api-docs).
 
 ```
 docker pull swaggerapi/swagger-editor
