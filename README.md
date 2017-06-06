@@ -28,7 +28,7 @@ So with some late nights ,looking at example reading and digging around in code 
 Event sourcing example project in spring boot as the first step.
 
 ##Things to do
-* Dockerize the application with multi layer docker build layers
+* Dockerize the application with multi layer docker build layers final image jre not jdk
 * sort out the path of all the endpoints into a web portal
 * use REACT to build simple front end
 * expose the events via endpoint
@@ -51,9 +51,44 @@ mvn clean install
 This will download all the jars and build the fat jar to be run in the target directory.
 
 ### Commands
+**more stuff here
 ### Read model
+**more stuff here
+
 ### Docker
 don't know about docker as a java dev!!!! [start here](https://www.docker.com/what-docker)
+
+This project makes use of the io.fabric8 docker plugin. Docker must be installed onto your 
+laptop (windows/mac).
+
+Once installed the normal build process can be followed. At the point where the docker image is required
+use the maven profile switch to trigger docker build. 
+```
+mvn clean package -Pdocker
+
+< END of maven build should see something like the following>
+[INFO] Copying files to C:\home\java\shadders360\vehicle\target\docker\cqrs\vehicle\1.0.0-SNAPSHOT\build\maven
+[INFO] Building tar: C:\home\java\shadders360\vehicle\target\docker\cqrs\vehicle\1.0.0-SNAPSHOT\tmp\docker-build.tar
+[INFO] DOCKER> [cqrs/vehicle:1.0.0-SNAPSHOT] "vehicle": Created docker-build.tar in 1 second
+[INFO] DOCKER> [cqrs/vehicle:1.0.0-SNAPSHOT] "vehicle": Built image sha256:10083
+[INFO] DOCKER> [cqrs/vehicle:1.0.0-SNAPSHOT] "vehicle": Removed old image sha256:9f488
+```
+The image will be built and can be run using the normal docker cli commands.
+In the target directory will be the generated docker file. To see the images use (docker images command).
+
+The plugin has the following goals making use of the configuration elements defined for the image.
+
+* mvn docker:start -Pdocker
+makes use of the run section of the plugin same as 
+docker run -d -p 8088:8080 --name vehicle cqrs/vehicle:1.0.0-SNAPSHOT
+
+* mvn docker:logs -Ddocker.follow -Pdocker
+same as docker logs <container> -f
+
+* mvn clean install -Pdocker
+runs the new docker image (currently run attached to the install phase)
+
+more plugin details can be found [fabric8.io](https://dmp.fabric8.io/#introduction) docs.
 
 ### Spring boot
 
@@ -65,10 +100,14 @@ cd target
 java -jar vehicle-1.0.0-SNAPSHOT.jar
 ```
 
-if no errors occur when sprint boot starts up the service is running 
-[at](http://localhost:8080/api/vehicles).
+if no errors occur when spring boot starts up the service will be running [here](http://localhost:8080/api/vehicles).
+
 The default mode will use in memory database for the query side and axon in memory Event store. 
-To make use of the swagger ui interface use this [endpoint](http://localhost:8080/swagger-ui.html).
+To make use of the swagger ui interface use [swagger ui](http://localhost:8080/swagger-ui.html).
+
+note: if the docker container is running you will get a bind on port error if you start application and will 
+      need to stop the docker container (docker ps , docker stop <conatiner or name>).
+      In both cases a running application is exposed [here](http://localhost:8080/api/vehicles)
 
 End points
 
@@ -84,8 +123,8 @@ The SwaggerConfig.class is taken from the web tutorial
 core swagger annotations found [here](https://github.com/swagger-api/swagger-core/wiki/Annotations-1.5.X).
 
 The swagger annotations can be found in VehicleResource and SwaggerConfig class files.
-Once nice way to check the swagger api is correct is run the swager-ui in docker and load the generated swagger
-spec output from (http://localhost:8080/v2/api-docs).
+Once nice way to check the swagger api is correct is run the swager-ui in docker 
+and load the generated swagger spec output from (http://localhost:8080/v2/api-docs).
 
 ```
 docker pull swaggerapi/swagger-editor
@@ -93,6 +132,7 @@ docker run -d -p 8090:8080 swaggerapi/swagger-editor
 ```
 
 ###Spring HAL browser of the read models
-further stuff here .........
+**further stuff here .........
 
 [hal](http://localhost:8080/)
+
