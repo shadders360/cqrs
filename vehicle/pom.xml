@@ -11,5 +11,76 @@
 
     <artifactId>vehicle</artifactId>
 
-
+    <properties>
+        <vehicle.port>8080</vehicle.port>
+    </properties>
+    <profiles>
+        <profile>
+            <id>docker</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <version>0.20.1</version>
+                        <configuration>
+                            <images>
+                                <image>
+                                    <alias>vehicle</alias>
+                                    <name>cqrs/vehicle:${project.version}</name>
+                                    <build>
+                                        <from>openjdk:latest</from>
+                                        <assembly>
+                                            <descriptorRef>artifact</descriptorRef>
+                                        </assembly>
+                                        <labels>
+                                            <version>${project.version}</version>
+                                            <artifact>${project.artifactId}</artifact>
+                                        </labels>
+                                        <ports>
+                                            <port>${vehicle.port}</port>
+                                        </ports>
+                                        <cmd>java -jar maven/${project.name}-${project.version}.jar</cmd>
+                                    </build>
+                                    <run>
+                                        <ports>
+                                            <port>${vehicle.port}:8080</port>
+                                        </ports>
+                                        <namingStrategy>alias</namingStrategy>
+                                        <wait>
+                                            <http>
+                                                <url>http://localhost:${vehicle.port}/swagger-resources</url>
+                                                <status>200</status>
+                                            </http>
+                                            <time>10000</time> <!--start up in milliseconds -->
+                                        </wait>
+                                    </run>
+                                </image>
+                            </images>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>docker:build</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                            </execution>
+                            <!-- runs built image in a new container with logs.
+                                 good for quick test but must remove stopped
+                                 container as <namingStrategy> in use remove later -->
+                            <execution>
+                                <id>docker:start</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                    <goal>logs</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
