@@ -29,7 +29,9 @@ Event sourcing example project in spring boot as the first step.
 
 ##Things to do
 * Dockerize the application with multi layer docker build layers final image jre not jdk
+* docker start up fix boot app fails in no db connection. can be fixed with container auto start or other
 * sort out the path of all the endpoints into a web portal
+* add integration test when docker container is built using docker plugin
 * use REACT to build simple front end
 * expose the events via endpoint
 * change register command to return created url with UUID. use sync command (makes sense on create)
@@ -49,6 +51,13 @@ source directory.
 mvn clean install
 ```
 This will download all the jars and build the fat jar to be run in the target directory.
+
+to run the standalone version 
+```
+cd vehicle
+cd target
+java -jar vehicle-1.0.0-SNAPSHOT.jar
+```
 
 ### Commands
 **more stuff here
@@ -86,9 +95,30 @@ docker run -d -p 8088:8080 --name vehicle cqrs/vehicle:1.0.0-SNAPSHOT
 same as docker logs <container> -f
 
 * mvn clean install -Pdocker
-runs the new docker image (currently run attached to the install phase)
+runs the new docker image (memory version of app)(currently run attached to the install phase)
 
 more plugin details can be found [fabric8.io](https://dmp.fabric8.io/#introduction) docs.
+
+
+To run using mysql in the target/docker directory use the docker-compose.yaml file to run the 
+ dockerized services.
+```
+ docker-compose up -d
+ docker-compose ps
+ 
+ ##### to stop conatiners
+ docker-compose stop
+ 
+ ##### to start conatiners
+ docker-compose start
+ 
+ ##### to stop and remove conatiners
+ docker-compose down 
+ 
+```
+You may find the spring boot service fails as the mysql container is not up before the 
+sprong boot try's to connect in which case re run docker-compose up -d command. (todo need to improve jpa
+if no db connection )
 
 ### Spring boot
 

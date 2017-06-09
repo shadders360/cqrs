@@ -13,7 +13,7 @@
 
     <properties>
         <vehicle.port>8080</vehicle.port>
-    </properties>
+     </properties>
     <profiles>
         <profile>
             <id>docker</id>
@@ -29,7 +29,7 @@
                                     <alias>vehicle</alias>
                                     <name>cqrs/vehicle:${project.version}</name>
                                     <build>
-                                        <from>openjdk:latest</from>
+                                        <from>openjdk:8</from>
                                         <assembly>
                                             <descriptorRef>artifact</descriptorRef>
                                         </assembly>
@@ -37,10 +37,15 @@
                                             <version>${project.version}</version>
                                             <artifact>${project.artifactId}</artifact>
                                         </labels>
+                                        <env>
+                                            <!-- in memory, usw mysql to connect to mysql server -->
+                                            <SPRING_PROFILES_ACTIVE>default</SPRING_PROFILES_ACTIVE>
+                                        </env>
                                         <ports>
                                             <port>${vehicle.port}</port>
                                         </ports>
-                                        <cmd>java -jar maven/${project.name}-${project.version}.jar</cmd>
+                                        <entryPoint>java -jar maven/${project.name}-${project.version}.jar</entryPoint>
+
                                     </build>
                                     <run>
                                         <ports>
@@ -52,7 +57,7 @@
                                                 <url>http://localhost:${vehicle.port}/swagger-resources</url>
                                                 <status>200</status>
                                             </http>
-                                            <time>10000</time> <!--start up in milliseconds -->
+                                            <time>15000</time> <!--start up in milliseconds -->
                                         </wait>
                                     </run>
                                 </image>
@@ -83,4 +88,20 @@
             </build>
         </profile>
     </profiles>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <targetPath>${project.build.directory}/docker</targetPath>
+                <directory>src/main/docker</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+    </build>
+
+
 </project>
