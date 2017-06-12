@@ -29,7 +29,7 @@ Event sourcing example project in spring boot as the first step.
 
 ##Things to do
 * Dockerize the application with multi layer docker build layers final image jre not jdk
-* docker start up fix boot app fails in no db connection. can be fixed with container auto start or other
+* docker start up fix boot app fails when no db connection. can be fixed with container auto start or other
 * sort out the path of all the endpoints into a web portal
 * add integration test when docker container is built using docker plugin
 * use REACT to build simple front end
@@ -62,7 +62,52 @@ java -jar vehicle-1.0.0-SNAPSHOT.jar
 ### Commands
 **more stuff here
 ### Read model
-**more stuff here
+
+```
+ "id": "vehicleQueryObject-representation",
+        "href": "http://localhost:8080/profile/vehicleQueryObjects",
+        "descriptors": [
+          {
+            "name": "vrm",
+            "type": "SEMANTIC"
+          },
+          {
+            "name": "vin",
+            "type": "SEMANTIC"
+          },
+          {
+            "name": "status",
+            "doc": {
+              "value": "UNTAXED, TAXED, SORNED",
+              "format": "TEXT"
+            },
+            "type": "SEMANTIC"
+          },
+          {
+            "name": "vedPaid",
+            "type": "SEMANTIC"
+          },
+          {
+            "name": "vedDuration",
+            "type": "SEMANTIC"
+          },
+          {
+            "name": "listPrice",
+            "type": "SEMANTIC"
+          },
+          {
+            "name": "make",
+            "type": "SEMANTIC"
+          },
+          {
+            "name": "model",
+            "type": "SEMANTIC"
+          }
+        ]
+      },
+```
+
+
 
 ### Docker
 don't know about docker as a java dev!!!! [start here](https://www.docker.com/what-docker)
